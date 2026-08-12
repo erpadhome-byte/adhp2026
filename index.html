@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-<link rel="stylesheet" href="./styles.css?v=036">
+<link rel="stylesheet" href="./styles.css?v=037">
 </head>
 <body>
 <div id="login" class="login">
@@ -42,7 +42,7 @@
   <div class="card"><div class="section-title">1. Cliente</div><input id="csearch" placeholder="Buscar por nombre, código, CUIT, email o teléfono"><div id="cresults"></div><div id="cselected"></div><div class="row"><button id="newClient" class="btn">+ Cliente nuevo</button><button id="clearClient" class="btn">Usar sin cliente</button></div></div>
   <div class="card"><div class="section-title">2. Productos</div><div class="row"><button id="scanBtn" class="btn primary big">📷 Escanear producto</button><button id="manualBtn" class="btn big">+ SKU manual</button></div><input id="psearch" placeholder="Buscar SKU, artículo, producto, color o medida"><div id="presults"></div></div>
   <div class="card"><div class="section-title">3. Pedido <span id="units" class="badge">0 u.</span></div><div id="cart"></div></div>
-  <div class="card"><div class="section-title">4. Condiciones</div><label>Forma de pago</label><select id="payment"><option>Transferencia bancaria</option><option>Efectivo - retiro en fabrica</option><option>eCheq</option></select><label>Entrega</label><select id="delivery"><option>Retiro en fábrica</option><option>Transporte</option></select><div id="transportWrap" class="hidden"><label>Transporte</label><input id="transport" placeholder="Nombre del transporte / indicación"></div><label>Descuento %</label><input id="discount" type="number" min="0" max="30" step="0.5" value="0"><label>Observaciones generales</label><textarea id="obs" rows="3" placeholder="Observaciones del pedido"></textarea><div id="qtywarn"></div></div>
+  <div class="card"><div class="section-title">4. Condiciones</div><label>Forma de pago</label><select id="payment"><option>Transferencia bancaria</option><option>Efectivo - retiro en fabrica</option><option>eCheq</option></select><label>Envío</label><select id="delivery"><option>Retiro en fábrica</option><option>Logística Adesal</option><option>Expreso</option></select><div id="transportWrap" class="hidden"><label>Expreso</label><input id="transport" placeholder="Nombre del expreso"></div><label>Descuento %</label><input id="discount" type="number" min="0" max="30" step="0.5" value="0"><label>Observaciones generales</label><textarea id="obs" rows="3" placeholder="Observaciones del pedido"></textarea><div id="qtywarn"></div></div>
   <div class="card totals"><div><span>Subtotal s/IVA</span><b id="sub">$ 0</b></div><div><span>Descuento</span><b id="discAmt">$ 0</b></div><div><span>Neto s/IVA</span><b id="net">$ 0</b></div><div><span>IVA 21%</span><b id="iva">$ 0</b></div><div class="grand"><span>Total c/IVA</span><b id="total">$ 0</b></div><button id="confirm" class="btn primary big" style="width:100%;margin-top:12px">Revisar y confirmar</button></div>
 </section>
 <section id="pedidos" class="view"><div class="row"><h2>Pedidos</h2><button id="refreshOrders" class="btn" style="flex:0 0 auto">Actualizar</button></div><input id="osearch" placeholder="Buscar pedido, cliente o vendedor"><div id="orders"></div></section>
@@ -57,9 +57,9 @@
 </div>
 <div id="modal" class="modal hidden"><div class="modalbox"><div class="modalhead"><h3 id="mtitle" style="margin:0"></h3><button id="mclose" class="close">×</button></div><div id="mbody"></div></div></div>
 <div id="printArea" class="hidden"></div>
-<script src="./app1a.js?v=036"></script>
-<script src="./app1b.js?v=036"></script>
-<script src="./app2.js?v=036"></script>
-<script src="./app3.js?v=036"></script>
-<script src="./app4.js?v=036"></script>
+<script src="./app1a.js?v=037"></script>
+<script src="./app1b.js?v=037"></script>
+<script src="./app2.js?v=037"></script>
+<script src="./app3.js?v=037"></script>
+<script src="./app4.js?v=037"></script>
 </body></html>
