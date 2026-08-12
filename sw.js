@@ -1,5 +1,5 @@
-const CACHE='adhome-presentes-v034-2';
-const SHELL=['./','./index.html','./styles.css','./app1a.js','./app1b.js','./app2.js','./manifest.webmanifest','./logo.png','./icon-192.png','./icon-512.png','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2','https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'];
+const CACHE='adhome-presentes-v035-1';
+const SHELL=['./','./index.html','./styles.css','./app1a.js','./app1b.js','./app2.js','./app3.js','./manifest.webmanifest','./logo.png','./icon-192.png','./icon-512.png','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2','https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'];
 self.addEventListener('install',e=>{e.waitUntil((async()=>{const c=await caches.open(CACHE);for(const u of SHELL){try{await c.add(u)}catch{}}self.skipWaiting()})())});
 self.addEventListener('activate',e=>{e.waitUntil((async()=>{for(const k of await caches.keys())if(k!==CACHE)await caches.delete(k);await self.clients.claim()})())});
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith((async()=>{const cached=await caches.match(e.request);try{const fresh=await fetch(e.request);if(fresh&&fresh.status<400){const c=await caches.open(CACHE);c.put(e.request,fresh.clone()).catch(()=>{})}return fresh}catch{if(cached)return cached;if(e.request.mode==='navigate'){const home=await caches.match('./');if(home)return home}return new Response('Sin conexión',{status:503})}})())});
