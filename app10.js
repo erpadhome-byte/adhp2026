@@ -1,4 +1,4 @@
-// PRESENTES 2026 CLOUD V0.4.3 - categorias controladas en SKU manual
+// PRESENTES 2026 CLOUD V0.4.5 - categorias controladas en SKU manual
 const CATEGORY_FALLBACK_V10=['Alfombra','Almohadon','Camino','Cuadro','Cubrecama','F. Edredon','Manta','Mantel','Pie de cama'];
 
 function normCatV10(s){
@@ -27,23 +27,33 @@ async function categoriesOnlineV10(){
 function catOptionsV10(cats,selected=''){
   return `<option value="">Seleccionar categoría *</option>${cats.map(c=>`<option value="${esc(c)}" ${c===selected?'selected':''}>${esc(c)}</option>`).join('')}<option value="__NEW__">+ Nueva categoría…</option>`;
 }
+function visibleCategoryV10(sel,newInput){
+  if(sel.value==='__NEW__')return String(newInput.value||'').trim();
+  const opt=sel.selectedOptions&&sel.selectedOptions.length?sel.selectedOptions[0]:sel.options[sel.selectedIndex];
+  const text=String(opt?.textContent||'').trim();
+  const value=String(opt?.value||sel.value||'').trim();
+  if(value&&value!=='__NEW__')return value;
+  if(text&&!/^Seleccionar categoría/i.test(text)&&text!=='+ Nueva categoría…')return text;
+  return '';
+}
 
 openManual=function(prefill=''){
   const cats=categoriesLocalV10();
-  modal('SKU manual',`<div class="warn tiny">Stock inicial 0. No bloquea la confirmación.</div><div class="tiny muted" style="margin:4px 0 8px">* Campos obligatorios</div><input id="msku" placeholder="SKU *" value="${esc(prefill)}"><input id="mdesc" placeholder="Artículo / descripción *"><div class="grid2"><div><select id="mcat">${catOptionsV10(cats)}</select><input id="mcatnew" class="hidden" placeholder="Nueva categoría *" style="margin-top:7px"></div><input id="mprod" placeholder="Producto"><input id="mcolor" placeholder="Color"><input id="msize" placeholder="Medida"></div><input id="mprice" type="number" min="0.01" step="0.01" placeholder="Precio s/IVA *"><textarea id="mobs" placeholder="Observación del SKU manual"></textarea><button id="msave" class="btn primary">Crear y agregar</button>`);
+  modal('SKU manual',`<div class="warn tiny">Stock inicial 0. No bloquea la confirmación.</div><div class="tiny muted" style="margin:4px 0 8px">* Campos obligatorios</div><input id="msku" placeholder="SKU *" value="${esc(prefill)}"><input id="mdesc" placeholder="Artículo / descripción *"><div class="grid2"><div><select id="mcat" autocomplete="off">${catOptionsV10(cats)}</select><input id="mcatnew" class="hidden" placeholder="Nueva categoría *" style="margin-top:7px"></div><input id="mprod" placeholder="Producto"><input id="mcolor" placeholder="Color"><input id="msize" placeholder="Medida"></div><input id="mprice" type="number" min="0.01" step="0.01" placeholder="Precio s/IVA *"><textarea id="mobs" placeholder="Observación del SKU manual"></textarea><button id="msave" class="btn primary">Crear y agregar</button>`);
 
   const sel=$('#mcat'),newInput=$('#mcatnew');
   sel.onchange=()=>{const isNew=sel.value==='__NEW__';newInput.classList.toggle('hidden',!isNew);if(isNew)setTimeout(()=>newInput.focus(),20)};
 
   categoriesOnlineV10().then(fresh=>{
     if(!document.body.contains(sel))return;
-    const current=sel.value;sel.innerHTML=catOptionsV10(fresh,current&&current!=='__NEW__'?current:'');
+    const current=visibleCategoryV10(sel,newInput);
+    sel.innerHTML=catOptionsV10(fresh,current&&current!=='__NEW__'?current:'');
     if(current==='__NEW__'){sel.value='__NEW__';newInput.classList.remove('hidden')}
   });
 
   $('#msave').onclick=async()=>{
-    const sku=$('#msku').value.trim().toUpperCase(),desc=$('#mdesc').value.trim(),priceRaw=$('#mprice').value.trim(),price=Number(priceRaw);
-    let category=sel.value==='__NEW__'?newInput.value.trim():sel.value.trim();
+    const sku=$('#msku').value.trim().toUpperCase().replace(/\s+/g,''),desc=$('#mdesc').value.trim(),priceRaw=$('#mprice').value.trim(),price=Number(priceRaw);
+    let category=visibleCategoryV10(sel,newInput);
     const faltan=[];if(!sku)faltan.push('SKU');if(!desc)faltan.push('Descripción');if(!category)faltan.push('Categoría');if(!priceRaw||!Number.isFinite(price)||price<=0)faltan.push('Precio s/IVA');
     if(faltan.length)return toast(`Completá los campos obligatorios: ${faltan.join(', ')}.`);
 
@@ -61,5 +71,6 @@ openManual=function(prefill=''){
     closeModal();addProduct({...data,observacion_item:body.observacion_manual||''});
     try{await cacheMasters()}catch{}
     loadProducts('');
+    toast(`SKU ${sku} creado correctamente.`);
   };
 };
