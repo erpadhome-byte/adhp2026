@@ -39,3 +39,5 @@ openManual=function(prefill=''){
     toast(`SKU ${sku} creado correctamente.`);
   };
 };
+
+import('./app14.js?v=048').catch(e=>console.error('No se pudo cargar alertas',e));
