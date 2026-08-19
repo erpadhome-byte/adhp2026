@@ -40,4 +40,4 @@ openManual=function(prefill=''){
   };
 };
 
-import('./app14.js?v=049').then(()=>import('./app15.js?v=049')).catch(e=>console.error('No se pudo cargar alertas',e));
+import('./app14.js?v=050').then(()=>import('./app15.js?v=050')).then(()=>import('./app16.js?v=050')).catch(e=>console.error('No se pudo cargar módulos V0.5.0',e));
