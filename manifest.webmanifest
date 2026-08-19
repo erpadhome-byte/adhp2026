@@ -2,6 +2,7 @@
   "name": "ADHOME PRESENTES 2026",
   "short_name": "ADHOME",
   "description": "Toma de pedidos ADHOME - PRESENTES 2026",
+  "id": "/adhp2026/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
