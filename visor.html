@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1628">
+<title>ADHOME · PRESENTES 2026 · Resultados</title>
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="stylesheet" href="./visor.css?v=050">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div id="login" class="login-screen">
+  <div class="login-card">
+    <img src="./logo.png" class="login-logo" alt="ADHOME">
+    <div class="eyebrow">PRESENTES 2026</div>
+    <h1>Resultados en vivo</h1>
+    <p class="login-copy">Acceso de sólo lectura al tablero ejecutivo de la feria.</p>
+    <label>Usuario</label>
+    <input value="PRESENTES" readonly aria-label="Usuario">
+    <label>Contraseña</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="••••••••">
+    <button id="loginBtn" class="primary">Ingresar</button>
+    <button id="firstBtn" class="secondary">Primera vez / Definir contraseña</button>
+    <div id="loginMsg" class="message"></div>
+    <div class="powered">Powered by LTapps</div>
+  </div>
+</div>
+
+<div id="viewer" class="hidden">
+  <header class="topbar">
+    <div class="brand">
+      <img src="./logo.png" alt="ADHOME">
+      <div><div class="eyebrow">PRESENTES 2026</div><strong>Resultados & Productividad en Vivo</strong></div>
+    </div>
+    <div class="top-actions">
+      <span class="live"><i></i> EN VIVO</span>
+      <span id="updated" class="updated">Actualizando…</span>
+      <button id="refreshBtn" class="icon-btn" title="Actualizar">↻</button>
+      <button id="logoutBtn" class="icon-btn">Salir</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow light">TRANSFORMACIÓN COMERCIAL</div>
+        <h2>De tomar pedidos en papel a gestionar la feria en tiempo real.</h2>
+        <p>Pedidos, ventas, stock, faltantes de producción y desempeño comercial centralizados en una única operación digital.</p>
+      </div>
+      <div class="hero-badges">
+        <span>Pedido digital</span><span>Stock automático</span><span>Producción visible</span><span>BI en vivo</span>
+      </div>
+    </section>
+
+    <section id="kpis" class="kpi-grid"></section>
+
+    <section class="section-head">
+      <div><div class="eyebrow">IMPACTO DE LA DIGITALIZACIÓN</div><h3>Una feria operada con información, no con planillas</h3></div>
+    </section>
+    <section class="impact-grid">
+      <article><small>ANTES</small><b>Pedidos en papel</b><span>Datos dispersos y carga posterior.</span><em>AHORA</em><strong>Pedido digital inmediato</strong><p>Cada pedido queda identificado, valorizado y disponible al instante.</p></article>
+      <article><small>ANTES</small><b>Stock a consultar</b><span>Sin visión inmediata al vender.</span><em>AHORA</em><strong>Stock descontado automáticamente</strong><p>La venta determina en el momento qué se cubre y qué queda pendiente.</p></article>
+      <article><small>ANTES</small><b>Faltantes posteriores</b><span>Producción se enteraba después de consolidar.</span><em>AHORA</em><strong>Necesidad de fabricación en vivo</strong><p>El faltante queda agrupado por SKU desde la confirmación del pedido.</p></article>
+      <article><small>ANTES</small><b>Resultados al final</b><span>Consolidación manual para saber cómo fue la feria.</span><em>AHORA</em><strong>Decisiones con datos en tiempo real</strong><p>Ventas, unidades, vendedores, categorías y ritmo comercial actualizados automáticamente.</p></article>
+    </section>
+
+    <section class="two-col">
+      <article class="panel production-panel">
+        <div class="panel-title"><div><div class="eyebrow">OPERACIÓN</div><h3>Pedido vs. disponibilidad</h3></div><span id="coverageLabel" class="pill"></span></div>
+        <div id="productionTotals" class="triple"></div>
+        <div class="coverage"><div id="coverageBar"></div></div>
+        <p class="note">La cobertura refleja las unidades del pedido que pudieron asignarse con stock al momento de confirmarlo.</p>
+      </article>
+      <article class="panel">
+        <div class="panel-title"><div><div class="eyebrow">PRODUCTIVIDAD</div><h3>Actividad digital registrada</h3></div></div>
+        <div id="productivity" class="mini-grid"></div>
+      </article>
+    </section>
+
+    <section class="two-col">
+      <article class="panel"><div class="panel-title"><div><div class="eyebrow">COMERCIAL</div><h3>Ventas por vendedor</h3></div></div><div id="sellers"></div></article>
+      <article class="panel"><div class="panel-title"><div><div class="eyebrow">MIX</div><h3>Top categorías</h3></div></div><div id="categories"></div></article>
+    </section>
+
+    <section class="two-col">
+      <article class="panel"><div class="panel-title"><div><div class="eyebrow">EVOLUCIÓN</div><h3>Ventas por día</h3></div></div><div id="days"></div></article>
+      <article class="panel"><div class="panel-title"><div><div class="eyebrow">RITMO</div><h3>Actividad por hora</h3></div></div><div id="hours"></div></article>
+    </section>
+
+    <section class="two-col wide-left">
+      <article class="panel"><div class="panel-title"><div><div class="eyebrow">PRODUCCIÓN</div><h3>Principales necesidades de fabricación</h3></div></div><div id="production"></div></article>
+      <article class="panel"><div class="panel-title"><div><div class="eyebrow">DEMANDA</div><h3>Productos destacados</h3></div></div><div id="products"></div></article>
+    </section>
+
+    <section class="panel recent-panel"><div class="panel-title"><div><div class="eyebrow">TRAZABILIDAD</div><h3>Últimos pedidos registrados</h3></div><span class="privacy">Sin datos sensibles de clientes</span></div><div id="recent"></div></section>
+
+    <footer><span>ADHOME · PRESENTES 2026</span><span>Gestión comercial digital en tiempo real</span><b>Designed by LTapps</b></footer>
+  </main>
+</div>
+<script src="./visor.js?v=050"></script>
+</body>
+</html>
