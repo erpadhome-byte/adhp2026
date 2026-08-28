@@ -40,4 +40,5 @@ openManual=function(prefill=''){
   };
 };
 
-import('./app14.js?v=050').then(()=>import('./app15.js?v=050')).then(()=>import('./app16.js?v=050')).then(()=>import('./app17.js?v=051')).catch(e=>console.error('No se pudo cargar módulos V0.5.1',e));
+import('./app14.js?v=050').then(()=>import('./app15.js?v=050')).then(()=>import('./app16.js?v=050')).catch(e=>console.error('No se pudo cargar módulos base V0.5.0',e));
+import('./app17.js?v=052').catch(e=>console.error('No se pudo cargar selector de familia V0.5.2',e));
